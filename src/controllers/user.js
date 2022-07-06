@@ -1,5 +1,5 @@
 // import profile model
-const { user } = require("../../models");
+const { user, profile } = require("../../models");
 
 exports.addUsers = async (req, res) => {
   try {
@@ -20,12 +20,19 @@ exports.addUsers = async (req, res) => {
 
 exports.getUsers = async (req, res) => {
   try {
+
     const users = await user.findAll({
-      // code here
-      attributes: {
-        exclude: ["password", "createdAt", "updatedAt"],
+      include: {
+        model: profile,
+        as: "profile",
+        attributes: {
+          exclude: ['createdAt', 'updatedAt', 'idUser']
+        }
       },
-    });
+      attributes: {
+        exclude: ['createdAt', 'updatedAt', 'password']
+      }
+    })
 
     res.send({
       status: "success",
