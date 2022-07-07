@@ -26,9 +26,8 @@ module.exports = (sequelize, DataTypes) => {
       // code here
       product.belongsToMany(models.category, {
         as: "categories",
-        // through is required in this association
         through: {
-          model: "productCategory", // this is "bridge" table
+          model: "productCategory",
           as: "bridge",
         },
         foreignKey: "idProduct",
